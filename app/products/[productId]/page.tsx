@@ -24,13 +24,16 @@ export default async function ProductDetailPage({ params }: { params: { productI
   }
 
   const isInStock = product.in_stock !== false && product.stock_status === 'instock';
+  const category = product.categories?.[0];
 
   return (
     <div>
       <Navbar />
       <main className="container mx-auto py-8">
         <nav className="mb-4 text-sm text-gray-600">
-          <Link href="/" className="hover:underline">Home</Link> &gt; <Link href="/products" className="hover:underline">NFC Stickers</Link> &gt; {product.name}
+          <Link href="/" className="hover:underline">Home</Link> &gt; {category ? (
+            <Link href={`/category/${category.slug}`} className="hover:underline">{category.name}</Link>
+          ) : null} &gt; {product.name}
         </nav>
         <div className="flex flex-col md:flex-row gap-10 bg-white rounded-lg shadow p-8">
           <div className="flex-1 flex flex-col items-center">
