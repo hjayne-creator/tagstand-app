@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function HeroSection() {
   return (
@@ -27,9 +28,11 @@ export default function HeroSection() {
         </div>
         {/* Right: NFC Card Image */}
         <div className="flex-1 flex justify-center md:justify-end">
-          <img
+          <Image
             src="/header-bg-image-nfc.png"
             alt="NFC Card Example"
+            width={400}
+            height={400}
             className="rounded-xl shadow-lg w-full max-w-xs md:max-w-md"
             style={{ background: 'rgba(255,255,255,0.1)' }}
           />

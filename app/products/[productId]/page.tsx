@@ -1,12 +1,18 @@
-import { products } from '../../../data/products';
 import Navbar from '../../../components/Navbar';
 import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import FooterSection from '../../../components/home/FooterSection';
 
-export default function ProductDetailPage({ params }: { params: { productId: string } }) {
-  const product = products.find(p => p.id === params.productId);
+async function getProduct(productId: string) {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+  const res = await fetch(`${baseUrl}/api/products/${productId}`, { cache: 'no-store' });
+  if (!res.ok) return null;
+  return await res.json();
+}
+
+export default async function ProductDetailPage({ params }: { params: { productId: string } }) {
+  const product = await getProduct(params.productId);
 
   if (!product) {
     return (
@@ -27,18 +33,18 @@ export default function ProductDetailPage({ params }: { params: { productId: str
         <div className="flex flex-col md:flex-row gap-10 bg-white rounded-lg shadow p-8">
           <div className="flex-1 flex flex-col items-center">
             <div className="w-full max-w-xs mb-6">
-              <Image src={product.image} alt={product.name} width={400} height={400} className="rounded object-cover w-full h-auto" />
+              <Image src={product.images?.[0]?.src || ''} alt={product.name} width={400} height={400} className="rounded object-cover w-full h-auto" />
             </div>
           </div>
           <div className="flex-1 flex flex-col justify-between">
             <div>
               <h1 className="text-2xl font-bold mb-2">{product.name}</h1>
-              <div className="text-xl text-blue-600 font-semibold mb-4">${product.price.toFixed(2)}</div>
+              <div className="text-xl text-blue-600 font-semibold mb-4">${parseFloat(product.price).toFixed(2)}</div>
               <div className="mb-4">
                 <label htmlFor="quantity" className="block text-sm font-medium mb-1">Quantity</label>
                 <input id="quantity" type="number" min={1} defaultValue={1} className="w-20 border rounded px-2 py-1" />
               </div>
-              <p className="mb-4 text-gray-700">{product.description}</p>
+              <p className="mb-4 text-gray-700" dangerouslySetInnerHTML={{ __html: product.description || '' }} />
               <div className="mb-6">
                 <h2 className="text-lg font-semibold mb-2">Specifications</h2>
                 <ul className="list-disc list-inside text-gray-600">

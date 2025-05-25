@@ -1,10 +1,12 @@
+import Image from 'next/image';
+
 const categories = [
-  { name: 'NFC Stickers', img: 'https://placehold.co/120x120?text=Sticker', href: '/category/nfc-stickers' },
-  { name: 'Hard Tags', img: 'https://placehold.co/120x120?text=Hard+Tag', href: '#' },
-  { name: 'Tokens', img: 'https://placehold.co/120x120?text=Token', href: '#' },
-  { name: 'Keychains', img: 'https://placehold.co/120x120?text=Keychain', href: '#' },
-  { name: 'Wristbands', img: 'https://placehold.co/120x120?text=Wristband', href: '#' },
-  { name: 'NFC Cards', img: 'https://placehold.co/120x120?text=Card', href: '#' },
+  { name: 'NFC Stickers', img: 'https://placehold.co/120x120/png?text=Sticker', href: '/category/nfc-stickers' },
+  { name: 'Hard Tags', img: 'https://placehold.co/120x120/png?text=Hard+Tag', href: '#' },
+  { name: 'Tokens', img: 'https://placehold.co/120x120/png?text=Token', href: '#' },
+  { name: 'Keychains', img: 'https://placehold.co/120x120/png?text=Keychain', href: '#' },
+  { name: 'Wristbands', img: 'https://placehold.co/120x120/png?text=Wristband', href: '#' },
+  { name: 'NFC Cards', img: 'https://placehold.co/120x120/png?text=Card', href: '#' },
 ];
 
 export default function CategoriesSection() {
@@ -20,9 +22,11 @@ export default function CategoriesSection() {
               href={cat.href}
               className="group block bg-white rounded-xl shadow hover:shadow-lg transition p-4 flex flex-col items-center text-center cursor-pointer border border-gray-100 hover:border-blue-400"
             >
-              <img
+              <Image
                 src={cat.img}
                 alt={cat.name}
+                width={80}
+                height={80}
                 className="mb-4 rounded w-20 h-20 object-cover border border-gray-200 group-hover:border-blue-400 transition"
               />
               <span className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition">

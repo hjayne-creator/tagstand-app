@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 const products = [
   { name: 'Black PET Logo NFC Sticker – NTAG216', price: 0.47, img: '/product-image-demo.jpg', popular: true },
   { name: 'Black PET Logo NFC Sticker – NTAG216', price: 2.90, img: '/product-image-demo.jpg', popular: true },
@@ -20,9 +22,11 @@ export default function FeaturedProductsSection() {
             <div key={idx} className="bg-white rounded-xl shadow hover:shadow-lg transition flex flex-col h-full border border-gray-100">
               <div className="relative">
                 <a href="#">
-                  <img
+                  <Image
                     src={product.img}
                     alt={product.name}
+                    width={300}
+                    height={160}
                     className="rounded-t-xl w-full h-40 object-cover"
                   />
                   {product.popular && (
