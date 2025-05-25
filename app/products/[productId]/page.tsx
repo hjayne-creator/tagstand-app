@@ -23,6 +23,8 @@ export default async function ProductDetailPage({ params }: { params: { productI
     );
   }
 
+  const isInStock = product.in_stock !== false && product.stock_status === 'instock';
+
   return (
     <div>
       <Navbar />
@@ -42,20 +44,15 @@ export default async function ProductDetailPage({ params }: { params: { productI
               <div className="text-xl text-blue-600 font-semibold mb-4">${parseFloat(product.price).toFixed(2)}</div>
               <div className="mb-4">
                 <label htmlFor="quantity" className="block text-sm font-medium mb-1">Quantity</label>
-                <input id="quantity" type="number" min={1} defaultValue={1} className="w-20 border rounded px-2 py-1" />
+                <input id="quantity" type="number" min={1} defaultValue={1} className="w-20 border rounded px-2 py-1" disabled={!isInStock} />
               </div>
               <p className="mb-4 text-gray-700" dangerouslySetInnerHTML={{ __html: product.description || '' }} />
-              <div className="mb-6">
-                <h2 className="text-lg font-semibold mb-2">Specifications</h2>
-                <ul className="list-disc list-inside text-gray-600">
-                  <li>Chip: NTAG216</li>
-                  <li>Material: PET</li>
-                  <li>Shape: Square, 35mm</li>
-                  <li>Branding: Black Logo</li>
-                  <li>Water-resistant</li>
-                </ul>
-              </div>
-              <button className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition w-full md:w-auto">Add to Cart</button>
+              {!isInStock ? (
+                <div className="mb-6 text-red-600 font-semibold">Out of Stock</div>
+              ) : null}
+              <button className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition w-full md:w-auto disabled:opacity-50 disabled:cursor-not-allowed" disabled={!isInStock}>
+                Add to Cart
+              </button>
             </div>
           </div>
         </div>

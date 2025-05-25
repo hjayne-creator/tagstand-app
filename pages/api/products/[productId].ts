@@ -3,7 +3,7 @@ import { woocommerce } from '../../../lib/woocommerce';
 // @ts-ignore
 import * as storage from 'node-persist';
 
-const CACHE_TTL = 60 * 60 * 1000; // 60 minutes in ms
+const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours in ms
 
 let storageInitialized = false;
 async function ensureStorage() {

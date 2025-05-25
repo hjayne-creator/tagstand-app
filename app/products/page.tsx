@@ -32,6 +32,8 @@ export default function ProductsPage() {
                 price: parseFloat(product.price),
                 image: product.images?.[0]?.src || '',
                 category: product.categories?.[0]?.name || '',
+                in_stock: product.in_stock,
+                stock_status: product.stock_status,
               }} />
             </Link>
           ))}
