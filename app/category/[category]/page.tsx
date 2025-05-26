@@ -11,7 +11,7 @@ export default function CategoryPage() {
   const [categories, setCategories] = useState<any[]>([]);
   const params = useParams();
   const router = useRouter();
-  const categorySlug = params.category as string;
+  const categorySlug = params?.category ? (params.category as string) : '';
 
   useEffect(() => {
     fetch('/api/categories')
