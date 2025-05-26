@@ -4,7 +4,7 @@ export type ProductCardProps = {
   product: {
     id: string;
     name: string;
-    description: string;
+    description?: string;
     price: number;
     image: string;
     category: string;
@@ -17,15 +17,17 @@ export default function ProductCard({ product }: ProductCardProps) {
   const isInStock = product.in_stock !== false && product.stock_status === 'instock';
   return (
     <div className="border rounded-lg shadow-md p-4 flex flex-col items-center bg-white">
-      <Image
-        src={product.image}
-        alt={product.name}
-        width={200}
-        height={200}
-        className="mb-4 object-cover rounded"
-      />
-      <h2 className="text-lg font-semibold mb-2">{product.name}</h2>
-      <p className="text-gray-600 mb-2">{product.description}</p>
+      <div className="w-[200px] h-[200px] flex items-center justify-center overflow-hidden mb-4">
+        <Image
+          src={product.image}
+          alt={product.name}
+          width={200}
+          height={200}
+          className="object-cover rounded"
+        />
+      </div>
+      <h2 className="text-sm font-semibold mb-2 line-clamp-2 h-14">{product.name}</h2>
+      {/*<p className="text-gray-600 mb-2">{product.description}</p>*/}
       <div className="text-blue-600 font-bold mb-4">${product.price.toFixed(2)}</div>
       {!isInStock && (
         <div className="mb-2 text-red-600 font-semibold">Out of Stock</div>

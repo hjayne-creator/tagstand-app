@@ -4,6 +4,8 @@ import ProductCard from '../../components/ProductCard';
 import Navbar from '../../components/Navbar';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { CATEGORY_WHITELIST } from '../../lib/categoryWhitelist';
+import { PRODUCT_BLACKLIST } from '../../lib/productBlacklist';
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<any[]>([]);
@@ -20,6 +22,11 @@ export default function ProductsPage() {
       .then(setProducts);
   }, []);
 
+  const filteredCategories = categories.filter((cat: any) => CATEGORY_WHITELIST.includes(cat.slug));
+  const filteredProducts = products.filter(
+    (product) => !PRODUCT_BLACKLIST.includes(Number(product.id))
+  );
+
   return (
     <div>
       <Navbar />
@@ -28,7 +35,7 @@ export default function ProductsPage() {
         <aside className="w-64 pr-8 border-r">
           <h2 className="font-bold text-xl mb-4">Shop by Product</h2>
           <ul>
-            {categories.map((cat: any) => (
+            {filteredCategories.map((cat: any) => (
               <li key={cat.id}>
                 <button
                   className="block w-full text-left py-2 px-2 rounded mb-1 hover:bg-gray-100"
@@ -44,7 +51,7 @@ export default function ProductsPage() {
         <section className="flex-1 pl-8">
           <h1 className="text-3xl font-bold mb-8">All Products</h1>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-            {products.map((product) => (
+            {filteredProducts.map((product) => (
               <Link key={product.id} href={`/products/${product.id}`} className="block hover:shadow-lg transition-shadow">
                 <ProductCard product={{
                   id: product.id,

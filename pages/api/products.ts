@@ -1,9 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { woocommerce } from '../../lib/woocommerce';
 import * as storage from 'node-persist';
+import { CACHE_TTL } from '../../lib/cacheConfig';
 
 const CACHE_KEY = 'products';
-const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours in ms
 
 let storageInitialized = false;
 async function ensureStorage() {

@@ -5,6 +5,8 @@ import Navbar from '../../../components/Navbar';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import FooterSection from '../../../components/home/FooterSection';
+import { CATEGORY_WHITELIST } from '../../../lib/categoryWhitelist';
+import { PRODUCT_BLACKLIST } from '../../../lib/productBlacklist';
 
 export default function CategoryPage() {
   const [products, setProducts] = useState<any[]>([]);
@@ -25,8 +27,10 @@ export default function CategoryPage() {
 
   const selectedCategory = categories.find((cat: any) => cat.slug === categorySlug);
   const filteredProducts = products.filter((p: any) =>
-    p.categories?.some((c: any) => c.slug === categorySlug)
+    p.categories?.some((c: any) => c.slug === categorySlug) &&
+    !PRODUCT_BLACKLIST.includes(Number(p.id))
   );
+  const filteredCategories = categories.filter((cat: any) => CATEGORY_WHITELIST.includes(cat.slug));
 
   return (
     <div>
@@ -36,7 +40,7 @@ export default function CategoryPage() {
         <aside className="w-64 pr-8 border-r">
           <h2 className="font-bold text-xl mb-4">Shop by Product</h2>
           <ul>
-            {categories.map((cat: any) => (
+            {filteredCategories.map((cat: any) => (
               <li key={cat.id}>
                 <button
                   className={`block w-full text-left py-2 px-2 rounded mb-1 ${
